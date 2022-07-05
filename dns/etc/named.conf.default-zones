@@ -1,8 +1,25 @@
-zone "prova.asa.br" { // Change to desired zone
-        type master;
-        file "/etc/bind/db.novodominio.com"; // Change to zone file path
-        allow-transfer {10.0.10.2; };        // Change to Secondary DNS IP
-//      allow-update {
-//          key "example.com";
-//  };
-};
+
+//key "example.com" { 
+ //        algorithm hmac-md5; 
+ //        secret "BD077oHTdwm6Kwm4pc5tBkrX6EW3RErIOIESKpIKP6vQHAPRYp+9ubig Fvl3gYuuib+DQ8+eCpHEe/rIy9tiIg=="; 
+ //}; 
+  
+ // prime the server with knowledge of the root servers 
+ zone "." { 
+         type hint; 
+         file "/etc/bind/db.root"; 
+ }; 
+  
+ // be authoritative for the localhost forward and reverse zones, and for 
+ // broadcast zones as per RFC 1912 
+  
+ zone "localhost" { 
+         type master; 
+         file "/etc/bind/db.local"; 
+ }; 
+  
+ zone "prova.asa.br" { 
+         type master; 
+         file "/etc/bind/db.ac.asa.br"; 
+         allow-transfer {0.0.0.0; }; 
+ };
